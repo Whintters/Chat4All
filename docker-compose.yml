@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # --- Message Broker (Kafka & Zookeeper) [cite: 11, 28] ---
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - chat4all-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      # Cria o tópico 'messages' automaticamente se não existir
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    networks:
+      - chat4all-net
+
+  # --- Camada de Persistência (Cassandra) [cite: 17, 88] ---
+  cassandra:
+    image: cassandra:4.1
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    volumes:
+      # Monta o script de inicialização dentro do container
+      - ./docker/cassandra/init.cql:/docker-entrypoint-initdb.d/init.cql
+      # Persistência de dados local (opcional, para não perder dados ao reiniciar)
+      - cassandra_data:/var/lib/cassandra
+    networks:
+      - chat4all-net
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(nodetool statusgossip) = running ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  cassandra_data:
+
+networks:
+  chat4all-net:
+    driver: bridge

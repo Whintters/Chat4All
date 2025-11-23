@@ -1,0 +1,4 @@
+com\chat4all\worker\repository\WorkerMessageRepository.class
+com\chat4all\worker\model\MessageEntity.class
+com\chat4all\worker\consumer\MessageConsumer.class
+com\chat4all\worker\WorkerApplication.class

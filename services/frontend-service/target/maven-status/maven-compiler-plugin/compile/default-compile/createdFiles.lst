@@ -1,0 +1,6 @@
+com\chat4all\frontend\FrontendApplication.class
+com\chat4all\frontend\repository\MessageRepository.class
+com\chat4all\frontend\controller\MessageRequestDto.class
+com\chat4all\frontend\controller\MessageController.class
+com\chat4all\frontend\service\MessageProducerService.class
+com\chat4all\frontend\model\MessageEntity.class
