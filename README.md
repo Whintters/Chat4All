@@ -87,7 +87,9 @@ java -jar services/frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar
 java -jar services/router-worker/target/router-worker-0.0.1-SNAPSHOT.jar
 ```
 
-### 6. 📡 Como Testar
+---
+
+## 📡 Como Testar
 
 #### 6.1 Enviar Mensagem (Produtor):
 
@@ -125,12 +127,14 @@ Utilize o Thunder Client, Postman ou Curl:
 
   Retorno: JSON contendo a mensagem salva com status DELIVERED.
 
-### 7. 🛠 Tecnologias Utilizadas
+---
 
-Spring Boot 3.1.5 (WebFlux)
+## 🛠 Tecnologias Utilizadas
 
-Apache Kafka (Mensageria)
+- Spring Boot 3.1.5 (WebFlux)
 
-Apache Cassandra (NoSQL Database)
+- Apache Kafka (Mensageria)
 
-Maven Multi-Module
+- Apache Cassandra (NoSQL Database)
+
+- Maven Multi-Module
