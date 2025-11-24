@@ -18,6 +18,7 @@
 
     <modules>
         <module>internal/shared-library</module>
+        <module>api</module>
         <module>services/frontend-service</module>
         <module>services/router-worker</module>
     </modules>

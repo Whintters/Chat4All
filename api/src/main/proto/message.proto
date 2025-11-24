@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package com.chat4all.api;
+
+option java_multiple_files = true;
+option java_package = "com.chat4all.api";
+
+service ChatService {
+  // Envia uma mensagem (Equivalente ao POST /v1/messages)
+  rpc SendMessage (ChatRequest) returns (ChatResponse);
+}
+
+message ChatRequest {
+  string conversation_id = 1;
+  string sender_id = 2;
+  string content = 3;
+}
+
+message ChatResponse {
+  string message_id = 1;
+  string status = 2; // ex: "ACCEPTED"
+}
