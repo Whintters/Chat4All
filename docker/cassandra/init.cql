@@ -16,3 +16,17 @@ CREATE TABLE IF NOT EXISTS messages_by_conversation (
     created_at timestamp,
     PRIMARY KEY ((conversation_id), sequence_number)
 ) WITH CLUSTERING ORDER BY (sequence_number ASC);
+
+-- Tabela de Metadados de Arquivos
+CREATE TABLE IF NOT EXISTS file_metadata (
+    file_id text PRIMARY KEY,
+    filename text,
+    content_type text,
+    size bigint,
+    uploader_id text,
+    download_url text,
+    created_at timestamp
+);
+
+-- Tabela para controlar status da mensagem (Sent -> Delivered -> Read)
+ALTER TABLE messages_by_conversation ADD status_history list<text>;

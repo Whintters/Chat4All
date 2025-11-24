@@ -32,14 +32,68 @@ public interface ChatRequestOrBuilder extends
       getSenderIdBytes();
 
   /**
+   * <pre>
+   * Texto da mensagem ou legenda do arquivo
+   * </pre>
+   *
    * <code>string content = 3;</code>
    * @return The content.
    */
   java.lang.String getContent();
   /**
+   * <pre>
+   * Texto da mensagem ou legenda do arquivo
+   * </pre>
+   *
    * <code>string content = 3;</code>
    * @return The bytes for content.
    */
   com.google.protobuf.ByteString
       getContentBytes();
+
+  /**
+   * <pre>
+   * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+   * </pre>
+   *
+   * <code>optional string type = 4;</code>
+   * @return Whether the type field is set.
+   */
+  boolean hasType();
+  /**
+   * <pre>
+   * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+   * </pre>
+   *
+   * <code>optional string type = 4;</code>
+   * @return The type.
+   */
+  java.lang.String getType();
+  /**
+   * <pre>
+   * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+   * </pre>
+   *
+   * <code>optional string type = 4;</code>
+   * @return The bytes for type.
+   */
+  com.google.protobuf.ByteString
+      getTypeBytes();
+
+  /**
+   * <code>optional string file_id = 5;</code>
+   * @return Whether the fileId field is set.
+   */
+  boolean hasFileId();
+  /**
+   * <code>optional string file_id = 5;</code>
+   * @return The fileId.
+   */
+  java.lang.String getFileId();
+  /**
+   * <code>optional string file_id = 5;</code>
+   * @return The bytes for fileId.
+   */
+  com.google.protobuf.ByteString
+      getFileIdBytes();
 }

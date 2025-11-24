@@ -6,14 +6,21 @@ option java_multiple_files = true;
 option java_package = "com.chat4all.api";
 
 service ChatService {
-  // Envia uma mensagem (Equivalente ao POST /v1/messages)
+  // Envia uma mensagem (Pode ser texto ou arquivo)
   rpc SendMessage (ChatRequest) returns (ChatResponse);
 }
 
 message ChatRequest {
   string conversation_id = 1;
   string sender_id = 2;
-  string content = 3;
+  string content = 3; // Texto da mensagem ou legenda do arquivo
+
+  // string type = 4; // "text" ou "file"
+  // string file_id = 5; // ID retornado pelo MinIO
+  
+  // Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+  optional string type = 4; 
+  optional string file_id = 5;
 }
 
 message ChatResponse {

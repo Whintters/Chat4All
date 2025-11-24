@@ -11,7 +11,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import java.time.Instant;
 import java.util.UUID;
 
-@GrpcService // Anotação mágica que expõe isso na porta 9090 (padrão gRPC)
+@GrpcService // Expõe o serviço na porta gRPC (9090 por padrão)
 public class GrpcChatController extends ChatServiceGrpc.ChatServiceImplBase {
 
     private final MessageProducerService producerService;
@@ -22,22 +22,32 @@ public class GrpcChatController extends ChatServiceGrpc.ChatServiceImplBase {
 
     @Override
     public void sendMessage(ChatRequest request, StreamObserver<ChatResponse> responseObserver) {
-        // 1. Gera ID e Timestamp
         String messageId = UUID.randomUUID().toString();
         
-        // 2. Cria o evento (Reutilizando seu DTO compartilhado)
+        // Lógica para definir default "text" se o campo type não vier preenchido
+        // O método .hasType() é gerado automaticamente pelo 'optional' no .proto
+        String msgType = request.hasType() ? request.getType() : "text";
+        
+        // Pega o fileId apenas se existir
+        String fileId = request.hasFileId() ? request.getFileId() : null;
+
+        // Cria o evento usando o construtor completo (com type e fileId)
+        // Isso garante que o Worker receba os dados do arquivo mesmo vindo via gRPC
         MessageEvent event = new MessageEvent(
                 messageId,
                 request.getConversationId(),
                 request.getSenderId(),
                 request.getContent(),
-                Instant.now().toString()
+                Instant.now().toString(),
+                msgType,  // Passando o tipo ("file" ou "text")
+                fileId    // Passando o ID do arquivo do MinIO
         );
 
-        // 3. Envia para o Kafka (Assíncrono)
+        // Reutiliza o MESMO serviço do REST para enviar ao Kafka
+        // Isso mantém a lógica centralizada e evita duplicação
         producerService.sendMessage(event).subscribe();
 
-        // 4. Responde para o cliente gRPC imediatamente (Ack)
+        // Responde imediatamente ao cliente (Ack)
         ChatResponse response = ChatResponse.newBuilder()
                 .setMessageId(messageId)
                 .setStatus("ACCEPTED")

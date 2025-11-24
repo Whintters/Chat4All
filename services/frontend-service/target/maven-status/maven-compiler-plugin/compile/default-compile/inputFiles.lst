@@ -1,7 +1,10 @@
+C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\controller\FileController.java
 C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\controller\GrpcChatController.java
 C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\controller\MessageController.java
 C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\controller\MessageRequestDto.java
 C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\FrontendApplication.java
+C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\repository\FileMetadataRepository.java
 C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\repository\MessageRepository.java
 C:\SD\chat4all-platform\services\frontend-service\src\main\java\com\chat4all\frontend\service\MessageProducerService.java
+C:\SD\chat4all-platform\services\frontend-service\src\main\java\model\FileMetadataEntity.java
 C:\SD\chat4all-platform\services\frontend-service\src\main\java\model\MessageEntity.java

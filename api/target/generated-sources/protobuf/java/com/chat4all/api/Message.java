@@ -33,14 +33,15 @@ public final class Message {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rmessage.proto\022\020com.chat4all.api\"J\n\013Cha" +
-      "tRequest\022\027\n\017conversation_id\030\001 \001(\t\022\021\n\tsen" +
-      "der_id\030\002 \001(\t\022\017\n\007content\030\003 \001(\t\"2\n\014ChatRes" +
-      "ponse\022\022\n\nmessage_id\030\001 \001(\t\022\016\n\006status\030\002 \001(" +
-      "\t2[\n\013ChatService\022L\n\013SendMessage\022\035.com.ch" +
-      "at4all.api.ChatRequest\032\036.com.chat4all.ap" +
-      "i.ChatResponseB\024\n\020com.chat4all.apiP\001b\006pr" +
-      "oto3"
+      "\n\rmessage.proto\022\020com.chat4all.api\"\210\001\n\013Ch" +
+      "atRequest\022\027\n\017conversation_id\030\001 \001(\t\022\021\n\tse" +
+      "nder_id\030\002 \001(\t\022\017\n\007content\030\003 \001(\t\022\021\n\004type\030\004" +
+      " \001(\tH\000\210\001\001\022\024\n\007file_id\030\005 \001(\tH\001\210\001\001B\007\n\005_type" +
+      "B\n\n\010_file_id\"2\n\014ChatResponse\022\022\n\nmessage_" +
+      "id\030\001 \001(\t\022\016\n\006status\030\002 \001(\t2[\n\013ChatService\022" +
+      "L\n\013SendMessage\022\035.com.chat4all.api.ChatRe" +
+      "quest\032\036.com.chat4all.api.ChatResponseB\024\n" +
+      "\020com.chat4all.apiP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -51,7 +52,7 @@ public final class Message {
     internal_static_com_chat4all_api_ChatRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_chat4all_api_ChatRequest_descriptor,
-        new java.lang.String[] { "ConversationId", "SenderId", "Content", });
+        new java.lang.String[] { "ConversationId", "SenderId", "Content", "Type", "FileId", "Type", "FileId", });
     internal_static_com_chat4all_api_ChatResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_chat4all_api_ChatResponse_fieldAccessorTable = new

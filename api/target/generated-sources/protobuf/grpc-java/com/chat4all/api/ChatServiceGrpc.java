@@ -96,7 +96,7 @@ public final class ChatServiceGrpc {
 
     /**
      * <pre>
-     * Envia uma mensagem (Equivalente ao POST /v1/messages)
+     * Envia uma mensagem (Pode ser texto ou arquivo)
      * </pre>
      */
     default void sendMessage(com.chat4all.api.ChatRequest request,
@@ -134,7 +134,7 @@ public final class ChatServiceGrpc {
 
     /**
      * <pre>
-     * Envia uma mensagem (Equivalente ao POST /v1/messages)
+     * Envia uma mensagem (Pode ser texto ou arquivo)
      * </pre>
      */
     public void sendMessage(com.chat4all.api.ChatRequest request,
@@ -162,7 +162,7 @@ public final class ChatServiceGrpc {
 
     /**
      * <pre>
-     * Envia uma mensagem (Equivalente ao POST /v1/messages)
+     * Envia uma mensagem (Pode ser texto ou arquivo)
      * </pre>
      */
     public com.chat4all.api.ChatResponse sendMessage(com.chat4all.api.ChatRequest request) {
@@ -189,7 +189,7 @@ public final class ChatServiceGrpc {
 
     /**
      * <pre>
-     * Envia uma mensagem (Equivalente ao POST /v1/messages)
+     * Envia uma mensagem (Pode ser texto ou arquivo)
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.chat4all.api.ChatResponse> sendMessage(

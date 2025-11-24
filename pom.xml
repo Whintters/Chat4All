@@ -19,6 +19,8 @@
     <modules>
         <module>internal/shared-library</module>
         <module>api</module>
+        <module>services/connector-instagram</module>
+        <module>services/connector-whatsapp</module>
         <module>services/frontend-service</module>
         <module>services/router-worker</module>
     </modules>

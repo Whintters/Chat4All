@@ -13,3 +13,9 @@ spring:
     port: 9042
     local-datacenter: datacenter1 # <--- Esta linha é a chave para corrigir o erro
     schema-action: CREATE_IF_NOT_EXISTS
+
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: chat-files

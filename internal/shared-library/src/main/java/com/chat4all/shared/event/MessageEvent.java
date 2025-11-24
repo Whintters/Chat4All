@@ -15,4 +15,6 @@ public class MessageEvent {
     private String senderId;
     private String payload;
     private String timestamp;
+    private String type;   // "text" ou "file"
+    private String fileId; // Opcional
 }

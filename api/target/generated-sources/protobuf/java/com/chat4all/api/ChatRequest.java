@@ -19,6 +19,8 @@ private static final long serialVersionUID = 0L;
     conversationId_ = "";
     senderId_ = "";
     content_ = "";
+    type_ = "";
+    fileId_ = "";
   }
 
   @java.lang.Override
@@ -41,6 +43,7 @@ private static final long serialVersionUID = 0L;
             com.chat4all.api.ChatRequest.class, com.chat4all.api.ChatRequest.Builder.class);
   }
 
+  private int bitField0_;
   public static final int CONVERSATION_ID_FIELD_NUMBER = 1;
   @SuppressWarnings("serial")
   private volatile java.lang.Object conversationId_ = "";
@@ -123,6 +126,10 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings("serial")
   private volatile java.lang.Object content_ = "";
   /**
+   * <pre>
+   * Texto da mensagem ou legenda do arquivo
+   * </pre>
+   *
    * <code>string content = 3;</code>
    * @return The content.
    */
@@ -140,6 +147,10 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
+   * <pre>
+   * Texto da mensagem ou legenda do arquivo
+   * </pre>
+   *
    * <code>string content = 3;</code>
    * @return The bytes for content.
    */
@@ -152,6 +163,112 @@ private static final long serialVersionUID = 0L;
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
       content_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int TYPE_FIELD_NUMBER = 4;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object type_ = "";
+  /**
+   * <pre>
+   * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+   * </pre>
+   *
+   * <code>optional string type = 4;</code>
+   * @return Whether the type field is set.
+   */
+  @java.lang.Override
+  public boolean hasType() {
+    return ((bitField0_ & 0x00000001) != 0);
+  }
+  /**
+   * <pre>
+   * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+   * </pre>
+   *
+   * <code>optional string type = 4;</code>
+   * @return The type.
+   */
+  @java.lang.Override
+  public java.lang.String getType() {
+    java.lang.Object ref = type_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      type_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+   * </pre>
+   *
+   * <code>optional string type = 4;</code>
+   * @return The bytes for type.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTypeBytes() {
+    java.lang.Object ref = type_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      type_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int FILE_ID_FIELD_NUMBER = 5;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object fileId_ = "";
+  /**
+   * <code>optional string file_id = 5;</code>
+   * @return Whether the fileId field is set.
+   */
+  @java.lang.Override
+  public boolean hasFileId() {
+    return ((bitField0_ & 0x00000002) != 0);
+  }
+  /**
+   * <code>optional string file_id = 5;</code>
+   * @return The fileId.
+   */
+  @java.lang.Override
+  public java.lang.String getFileId() {
+    java.lang.Object ref = fileId_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      fileId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>optional string file_id = 5;</code>
+   * @return The bytes for fileId.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getFileIdBytes() {
+    java.lang.Object ref = fileId_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      fileId_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -181,6 +298,12 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(content_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, content_);
     }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, type_);
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, fileId_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -198,6 +321,12 @@ private static final long serialVersionUID = 0L;
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(content_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, content_);
+    }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, type_);
+    }
+    if (((bitField0_ & 0x00000002) != 0)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, fileId_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -220,6 +349,16 @@ private static final long serialVersionUID = 0L;
         .equals(other.getSenderId())) return false;
     if (!getContent()
         .equals(other.getContent())) return false;
+    if (hasType() != other.hasType()) return false;
+    if (hasType()) {
+      if (!getType()
+          .equals(other.getType())) return false;
+    }
+    if (hasFileId() != other.hasFileId()) return false;
+    if (hasFileId()) {
+      if (!getFileId()
+          .equals(other.getFileId())) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -237,6 +376,14 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getSenderId().hashCode();
     hash = (37 * hash) + CONTENT_FIELD_NUMBER;
     hash = (53 * hash) + getContent().hashCode();
+    if (hasType()) {
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getType().hashCode();
+    }
+    if (hasFileId()) {
+      hash = (37 * hash) + FILE_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getFileId().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -371,6 +518,8 @@ private static final long serialVersionUID = 0L;
       conversationId_ = "";
       senderId_ = "";
       content_ = "";
+      type_ = "";
+      fileId_ = "";
       return this;
     }
 
@@ -413,6 +562,16 @@ private static final long serialVersionUID = 0L;
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.content_ = content_;
       }
+      int to_bitField0_ = 0;
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.type_ = type_;
+        to_bitField0_ |= 0x00000001;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.fileId_ = fileId_;
+        to_bitField0_ |= 0x00000002;
+      }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -474,6 +633,16 @@ private static final long serialVersionUID = 0L;
         bitField0_ |= 0x00000004;
         onChanged();
       }
+      if (other.hasType()) {
+        type_ = other.type_;
+        bitField0_ |= 0x00000008;
+        onChanged();
+      }
+      if (other.hasFileId()) {
+        fileId_ = other.fileId_;
+        bitField0_ |= 0x00000010;
+        onChanged();
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -515,6 +684,16 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000004;
               break;
             } // case 26
+            case 34: {
+              type_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000008;
+              break;
+            } // case 34
+            case 42: {
+              fileId_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000010;
+              break;
+            } // case 42
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -678,6 +857,10 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object content_ = "";
     /**
+     * <pre>
+     * Texto da mensagem ou legenda do arquivo
+     * </pre>
+     *
      * <code>string content = 3;</code>
      * @return The content.
      */
@@ -694,6 +877,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * Texto da mensagem ou legenda do arquivo
+     * </pre>
+     *
      * <code>string content = 3;</code>
      * @return The bytes for content.
      */
@@ -711,6 +898,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * Texto da mensagem ou legenda do arquivo
+     * </pre>
+     *
      * <code>string content = 3;</code>
      * @param value The content to set.
      * @return This builder for chaining.
@@ -724,6 +915,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * Texto da mensagem ou legenda do arquivo
+     * </pre>
+     *
      * <code>string content = 3;</code>
      * @return This builder for chaining.
      */
@@ -734,6 +929,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * Texto da mensagem ou legenda do arquivo
+     * </pre>
+     *
      * <code>string content = 3;</code>
      * @param value The bytes for content to set.
      * @return This builder for chaining.
@@ -744,6 +943,188 @@ private static final long serialVersionUID = 0L;
       checkByteStringIsUtf8(value);
       content_ = value;
       bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object type_ = "";
+    /**
+     * <pre>
+     * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+     * </pre>
+     *
+     * <code>optional string type = 4;</code>
+     * @return Whether the type field is set.
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <pre>
+     * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+     * </pre>
+     *
+     * <code>optional string type = 4;</code>
+     * @return The type.
+     */
+    public java.lang.String getType() {
+      java.lang.Object ref = type_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        type_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+     * </pre>
+     *
+     * <code>optional string type = 4;</code>
+     * @return The bytes for type.
+     */
+    public com.google.protobuf.ByteString
+        getTypeBytes() {
+      java.lang.Object ref = type_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        type_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+     * </pre>
+     *
+     * <code>optional string type = 4;</code>
+     * @param value The type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setType(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      type_ = value;
+      bitField0_ |= 0x00000008;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+     * </pre>
+     *
+     * <code>optional string type = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearType() {
+      type_ = getDefaultInstance().getType();
+      bitField0_ = (bitField0_ & ~0x00000008);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
+     * </pre>
+     *
+     * <code>optional string type = 4;</code>
+     * @param value The bytes for type to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTypeBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      type_ = value;
+      bitField0_ |= 0x00000008;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object fileId_ = "";
+    /**
+     * <code>optional string file_id = 5;</code>
+     * @return Whether the fileId field is set.
+     */
+    public boolean hasFileId() {
+      return ((bitField0_ & 0x00000010) != 0);
+    }
+    /**
+     * <code>optional string file_id = 5;</code>
+     * @return The fileId.
+     */
+    public java.lang.String getFileId() {
+      java.lang.Object ref = fileId_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fileId_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>optional string file_id = 5;</code>
+     * @return The bytes for fileId.
+     */
+    public com.google.protobuf.ByteString
+        getFileIdBytes() {
+      java.lang.Object ref = fileId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fileId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>optional string file_id = 5;</code>
+     * @param value The fileId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFileId(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      fileId_ = value;
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional string file_id = 5;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearFileId() {
+      fileId_ = getDefaultInstance().getFileId();
+      bitField0_ = (bitField0_ & ~0x00000010);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional string file_id = 5;</code>
+     * @param value The bytes for fileId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFileIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      fileId_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
