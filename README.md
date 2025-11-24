@@ -11,6 +11,8 @@ Plataforma de mensageria escalável com suporte a microsserviços, gRPC, upload 
 * **gRPC** (Protocol Buffers)
 * **Swagger/OpenAPI** (Documentação)
 
+---
+
 ## 🚀 Como Executar
 
 ### 1. Infraestrutura (Docker)
@@ -84,9 +86,13 @@ Abra 4 terminais e inicie os serviços:
     java -jar services/connector-instagram/target/connector-instagram-0.0.1-SNAPSHOT.jar
     ```
 
+---
+
 ## 📚 Documentação da API (Swagger)
 
 Acesse a interface visual para testes: 👉 http://localhost:8080/webjars/swagger-ui/index.html 👉 clique em Authorize e use o token: chat4all-secret-key
+
+---
 
 ## 🧪 Cenários de Teste
 
