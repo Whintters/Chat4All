@@ -4,6 +4,7 @@ server:
 spring:
   kafka:
     bootstrap-servers: localhost:9092
+
     consumer:
       group-id: router-workers-group
       auto-offset-reset: earliest
@@ -11,9 +12,31 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
   cassandra:
     keyspace-name: chat4all
     contact-points: localhost
     port: 9042
     local-datacenter: datacenter1 # <--- Obrigatório
     schema-action: CREATE_IF_NOT_EXISTS
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true

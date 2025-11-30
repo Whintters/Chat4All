@@ -19,3 +19,22 @@ minio:
   access-key: minioadmin
   secret-key: minioadmin
   bucket-name: chat-files
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+
+grpc:
+  server:
+    port: 9091 # Mudando de 9090 para 9091 para não brigar com o Prometheus
