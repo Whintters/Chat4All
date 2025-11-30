@@ -1,125 +1,228 @@
-# Chat4All Platform - Versão Completa (Fase 3)
+# Chat4All Platform 🚀
 
-Plataforma de mensageria escalável com suporte a microsserviços, gRPC, upload de arquivos e integração mock com redes sociais.
-
-## 🛠 Tecnologias
-
-* **Java 17** (Spring Boot 3 + WebFlux)
-* **Apache Kafka** (Event Backbone)
-* **Apache Cassandra** (Banco Distribuído)
-* **MinIO** (Object Storage S3-Compatible)
-* **gRPC** (Protocol Buffers)
-* **Swagger/OpenAPI** (Documentação)
+**Chat4All** é uma plataforma de mensageria distribuída de alta performance, projetada com arquitetura de microsserviços orientada a eventos (Event-Driven). O sistema suporta envio de mensagens de texto e arquivos, roteamento inteligente para múltiplos canais (simulados), persistência poliglota e monitoramento em tempo real.
 
 ---
 
-## 🚀 Como Executar
+## 🛠️ Tecnologias e Arquitetura
 
-### 1. Infraestrutura (Docker)
+### Core
+* **Linguagem:** Java 17 (LTS)
+* **Framework:** Spring Boot 3 (WebFlux & MVC)
+* **Build Tool:** Maven (Multi-Module)
 
-Inicie todos os serviços de base (Kafka, Cassandra, MinIO):
+### Infraestrutura & Dados
+* **Message Broker:** Apache Kafka (Desacoplamento e buffer de mensagens)
+* **NoSQL Database:** Apache Cassandra (Persistência de alto throughput)
+* **Object Storage:** MinIO (Armazenamento de arquivos compatível com S3)
+* **Containerização:** Docker & Docker Compose
+
+### Comunicação
+* **API REST:** Endpoints HTTP padrão.
+* **gRPC:** Protocolo de alta performance com Protobuf.
+
+### Observabilidade
+* **Métricas:** Spring Actuator & Micrometer.
+* **Coleta:** Prometheus.
+* **Visualização:** Grafana.
+
+---
+
+## 📋 Pré-requisitos
+
+Para rodar este projeto, você precisa de:
+1.  **Java 17** instalado e configurado no PATH.
+2.  **Maven** instalado.
+3.  **Docker Desktop** rodando (com WSL 2 no Windows).
+4.  **cURL** ou **Postman** (para testes).
+5.  **k6** (opcional, para testes de carga).
+
+---
+
+## 🚀 Guia de Inicialização (Zero to Hero)
+
+Siga estes passos na ordem exata para levantar o ambiente completo.
+
+### 1. Subir a Infraestrutura
+
+Na raiz do projeto, inicie os containers:
 
 ```bash
 docker-compose up -d
 ```
 
-Aguarde o Cassandra ficar "healthy" e o MinIO subir.
+⏳ Aguarde: O Cassandra e o Kafka levam cerca de 60 a 90 segundos para estarem totalmente operacionais. Verifique com docker ps se o status do Cassandra é (healthy).
 
-### 2. Configuração Inicial (Primeira Execução)
+### 2. Configurar o Banco de Dados (Cassandra)
 
-Se for a primeira vez, crie o esquema do banco:
+Execute o script abaixo para criar o Keyspace, Tabelas e Índices:
 
 ```bash
-# Execute dentro do container do Cassandra
-docker exec -i chat4all-platform-cassandra-1 cqlsh -e "
+docker-compose exec cassandra cqlsh -e "
 CREATE KEYSPACE IF NOT EXISTS chat4all WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
 USE chat4all;
+
+-- Tabela de Mensagens
 CREATE TABLE IF NOT EXISTS messages_by_conversation (
-    conversation_id text, sequence_number bigint, message_id text, payload text, status text, 
-    created_at timestamp, status_history list<text>,
+    conversation_id text,
+    sequence_number bigint,
+    message_id text,
+    payload text,
+    status text,
+    created_at timestamp,
+    status_history list<text>,
     PRIMARY KEY ((conversation_id), sequence_number)
 ) WITH CLUSTERING ORDER BY (sequence_number ASC);
+
+-- Tabela de Metadados de Arquivos
 CREATE TABLE IF NOT EXISTS file_metadata (
-    file_id text PRIMARY KEY, filename text, content_type text, size bigint, 
-    uploader_id text, download_url text, conversation_id text, created_at timestamp
-);"
+    file_id text PRIMARY KEY,
+    filename text,
+    content_type text,
+    size bigint,
+    uploader_id text,
+    download_url text,
+    conversation_id text,
+    created_at timestamp
+);
+
+-- Índice para busca por ID (necessário para atualização de status)
+CREATE INDEX IF NOT EXISTS ON messages_by_conversation (message_id);"
 ```
 
-Certifique-se também de que o bucket chat-files existe no MinIO (http://localhost:9001). Caso não exista, crie com os comandos:
+### 3. Configurar o Object Storage (MinIO)
+
+Crie o bucket para uploads:
+1.	Acesse http://localhost:9001 (Login: minioadmin / minioadmin).
+2.	Vá em Buckets > Create Bucket.
+3.	Nome do bucket: chat-files.
+4.	Clique em Create Bucket.
+
+### 4. Compilar o Projeto
+Gera os artefatos .jar de todos os módulos:
 
 ```bash
-docker exec -it chat4all-platform-minio-1 mc alias set myminio http://localhost:9000 minioadmin minioadmin
->> docker exec -it chat4all-platform-minio-1 mc mb myminio/chat-files
+mvn clean install
 ```
 
-### 3. Compilar e Rodar
+### 5. Iniciar os Microsserviços
 
-Compile todo o projeto:
+Abra 4 terminais separados e execute um comando em cada (utilizando -Dserver.address=0.0.0.0 para evitar bloqueios de firewall no Windows):
 
-  ```bash
-  mvn clean install
-  ```
+Terminal 1: API Gateway (Frontend)
 
-Abra 4 terminais e inicie os serviços:
+```bash
+java "-Dserver.address=0.0.0.0" -jar services/frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar
+```
 
-  - API Gateway (REST/gRPC):
+Terminal 2: Router Worker (Processador)
 
-    ```bash
-    java -jar services/frontend-service/target/frontend-service-0.0.1-SNAPSHOT.jar
-    ```
+```bash
+java "-Dserver.address=0.0.0.0" -jar services/router-worker/target/router-worker-0.0.1-SNAPSHOT.jar
+```
 
-  - Router Worker:
+Terminal 3: WhatsApp Mock
 
-    ```bash
-    java -jar services/router-worker/target/router-worker-0.0.1-SNAPSHOT.jar
-    ```
-    
-  - WhatsApp Mock:
+```bash
+java "-Dserver.address=0.0.0.0" -jar services/connector-whatsapp/target/connector-whatsapp-0.0.1-SNAPSHOT.jar
+```
+Terminal 4: Instagram Mock
 
-    ```bash
-    java -jar services/connector-whatsapp/target/connector-whatsapp-0.0.1-SNAPSHOT.jar
-    ```
-    
-  - Instagram Mock:
-
-    ```bash
-    java -jar services/connector-instagram/target/connector-instagram-0.0.1-SNAPSHOT.jar
-    ```
+```bash
+java "-Dserver.address=0.0.0.0" -jar services/connector-instagram/target/connector-instagram-0.0.1-SNAPSHOT.jar
+```
 
 ---
 
-## 📚 Documentação da API (Swagger)
+## 📡 Interfaces e Acessos
 
-Acesse a interface visual para testes: 👉 http://localhost:8080/webjars/swagger-ui/index.html 👉 clique em Authorize e use o token: chat4all-secret-key
+- Serviço: Swagger UI (API Docs) - URL: http://localhost:8080/webjars/swagger-ui/index.html - Credenciais/Notas: Token: chat4all-secret-key
+- Serviços: Grafana (Dashboards) - URL: http://localhost:3000 - Credenciais/Notas: User: admin / Pass: admin
+- Serviços: Prometheus (Métricas) - URL: http://localhost:9090 - Credenciais/Notas: -
+- Serviços: MinIO Console - URL: http://localhost:9001 - Credenciais/Notas: minioadmin / minioadmin
+- Serviços: gRPC Server - URL: localhost:9091 - Credenciais/Notas: Plaintext (sem TLS)
 
 ---
 
 ## 🧪 Cenários de Teste
 
-### 1. Upload de Arquivo
+### 1. Upload de Arquivo (REST)
 
-- POST /v1/files (Multipart)
+Envie um arquivo e receba o link de download e ID:
 
-- Retorna fileId e URL de download.
+```bash
+curl.exe -X POST http://localhost:8080/v1/files `
+  -F "file=@teste.txt" `
+  -F "uploaderId=user-01" `
+  -F "conversationId=chat-demo"
+```
+  
+### 2. Envio de Mensagem com Anexo (REST)
 
-### 2. Enviar Mensagem (Com ou sem arquivo)
+Use o fileId retornado no passo anterior. Se o senderId começar com wa_, será roteado para o WhatsApp Mock:
 
-- POST /v1/messages
+POST /v1/messages
+JSON
+{
+  "conversationId": "chat-demo",
+  "senderId": "wa_usuario_teste",
+  "content": "Segue o documento anexo",
+  "type": "file",
+  "fileId": "COLE_O_FILE_ID_AQUI"
+}
 
-Body:
+### 3. Envio via gRPC
 
-  ```JSON
-  {
-    "conversationId": "chat-01",
-    "senderId": "wa_usuario", 
-    "content": "Teste com arquivo",
-    "type": "file",
-    "fileId": "<ID_DO_UPLOAD>"
-  }
-  ```
+Utilize o Postman (gRPC Request):
+•	URL: localhost:9091 (Modo Plaintext).
+•	Proto: Importe api/src/main/proto/message.proto.
+•	Método: SendMessage.
 
-- Obs: Se senderId começar com wa_, vai para o WhatsApp Mock. Se ig_, vai para o Instagram.
+---
 
-### 3. Fluxo de Status
+## 📈 Testes de Carga e Escalabilidade
 
-O sistema simula automaticamente: SENT (API) -> DELIVERED (Mock recebeu) -> READ (Mock leu). Verifique o status final consultando o GET /v1/conversations/{id}/messages.
+Para validar a performance, utilize o script k6 incluído na raiz:
+
+### 1.	Subir Workers Extras: Abra novos terminais e rode o router-worker em portas alternativas:
+
+```bash
+java "-Dserver.port=8084" "-Dserver.address=0.0.0.0" -jar services/router-worker/target/router-worker-0.0.1-SNAPSHOT.jar
+java "-Dserver.port=8085" "-Dserver.address=0.0.0.0" -jar services/router-worker/target/router-worker-0.0.1-SNAPSHOT.jar
+```
+
+### 2.	Rodar o Script de Carga:
+
+```bash
+k6 run load-test.js
+```
+
+### 3.	Monitorar: 
+
+Acompanhe o throughput e o consumo de CPU de cada worker no Dashboard do Grafana.
+
+---
+
+## 🧹 Limpeza do Ambiente
+
+Para encerrar todos os processos e liberar memória:
+
+PowerShell
+### 1. Matar processos Java:
+
+```bash
+taskkill /F /IM java.exe
+```
+
+### 2. Derrubar containers (Mantendo dados):
+
+```bash
+docker-compose down
+```
+
+### OU 3. Derrubar e apagar dados (Reset total):
+
+```bash
+docker-compose down -v
+```
+
