@@ -188,6 +188,9 @@ Para validar a performance, utilize o script k6 incluído na raiz:
 
 ```bash
 java "-Dserver.port=8084" "-Dserver.address=0.0.0.0" -jar services/router-worker/target/router-worker-0.0.1-SNAPSHOT.jar
+```
+
+```bash
 java "-Dserver.port=8085" "-Dserver.address=0.0.0.0" -jar services/router-worker/target/router-worker-0.0.1-SNAPSHOT.jar
 ```
 
