@@ -37,6 +37,7 @@ public class GrpcChatController extends ChatServiceGrpc.ChatServiceImplBase {
                 messageId,
                 request.getConversationId(),
                 request.getSenderId(),
+                request.getRecipientId(),
                 request.getContent(),
                 Instant.now().toString(),
                 msgType,  // Passando o tipo ("file" ou "text")

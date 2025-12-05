@@ -11,9 +11,13 @@ export const options = {
 
 export default function () {
   const url = 'http://localhost:8080/v1/messages';
+  const isWhatsapp = Math.random() > 0.5;
+  const randomChatId = 'chat-load-' + Math.floor(Math.random() * 100);
+  const targetRecipient = isWhatsapp ? 'wa_destinatario_carga' : 'ig_destinatario_carga';
   const payload = JSON.stringify({
-    conversationId: 'chat-load-test',
+    conversationId: randomChatId,
     senderId: 'wa_user_load',
+    recipientId: targetRecipient,
     content: 'Teste de Carga k6 - Mensagem de alto throughput',
     type: 'text'
   });

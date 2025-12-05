@@ -49,15 +49,22 @@ public class MessageConsumer {
         repository.save(entity).subscribe();
         logger.info("Audit: Mensagem {} persistida com status DELIVERED", event.getMessageId());
 
-        // --- ROTEAMENTO PARA OS MOCKS ---
-        if (event.getSenderId() != null) {
-            if (event.getSenderId().startsWith("wa_")) {
+        String destino = event.getRecipientId();
+
+        if (destino != null) {
+            if (destino.startsWith("wa_")) {
+                // Se o destino é WhatsApp, manda pra fila do WhatsApp
                 kafkaTemplate.send("whatsapp-outbound", event);
-                logger.info("🔀 Roteado para WhatsApp Mock");
-            } else if (event.getSenderId().startsWith("ig_")) {
+                logger.info("🔀 Roteado para WhatsApp Mock (Destino: {})", destino);
+                
+            } else if (destino.startsWith("ig_")) {
+                // Se o destino é Instagram, manda pra fila do Instagram
                 kafkaTemplate.send("instagram-outbound", event);
-                logger.info("🔀 Roteado para Instagram Mock");
+                logger.info("🔀 Roteado para Instagram Mock (Destino: {})", destino);
             }
+        } else {
+            // Fallback: Se não tiver destino explícito, podemos logar um aviso
+            logger.warn("⚠️ Mensagem sem recipientId, nenhum roteamento externo realizado.");
         }
     }
 

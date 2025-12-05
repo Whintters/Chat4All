@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class MessageRequestDto {
     private String conversationId;
     private String senderId;
+    private String recipientId;
     private String content;
     private String type; 
     private String fileId;

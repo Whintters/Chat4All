@@ -21,6 +21,7 @@ message ChatRequest {
   // Usamos 'optional' para permitir verificar se o campo foi enviado (hasType/hasFileId)
   optional string type = 4; 
   optional string file_id = 5;
+  optional string recipient_id = 6;
 }
 
 message ChatResponse {

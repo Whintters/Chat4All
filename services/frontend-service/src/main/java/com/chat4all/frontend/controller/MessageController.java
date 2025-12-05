@@ -51,6 +51,7 @@ public class MessageController {
                 UUID.randomUUID().toString(),   // messageId
                 request.getConversationId(),    // conversationId
                 request.getSenderId(),          // senderId
+                request.getRecipientId(),        // recipientId
                 request.getContent(),           // payload (texto ou descrição)
                 Instant.now().toString(),       // timestamp (String para evitar erro de serialização)
                 msgType,                        // type (Novo campo)
